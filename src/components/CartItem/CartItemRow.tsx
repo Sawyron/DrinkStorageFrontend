@@ -2,6 +2,7 @@ import { ChangeEvent, FC } from 'react';
 import { ICartItem } from '../../types/ICartItem';
 import Price from '../Price/Price';
 import classes from './CartItemRow.module.css';
+import NumberInput from '../NumberInput/NumberInput';
 
 export interface ICartItemProps {
   item: ICartItem;
@@ -10,30 +11,25 @@ export interface ICartItemProps {
 }
 
 const CartItemRow: FC<ICartItemProps> = ({ item, onCountChange, onDelete }) => {
-  const handleCountChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onCountChange(Number(e.target.value));
-  };
-
   return (
     <tr>
       <td>
-        <div className={classes.product}>
-          <img
-            className={classes['product-image']}
-            src={item.product.imageUrl}
-            alt={item.product.name}
-          ></img>
-          <p>{item.product.name}</p>
-        </div>
+        <img
+          className={classes['product-image']}
+          src={item.product.imageUrl}
+          alt={item.product.name}
+        ></img>
       </td>
       <td>
-        <input
-          type="number"
-          min={1}
+        <p className={classes.label}>{item.product.name}</p>
+      </td>
+      <td>
+        <NumberInput
+          min={0}
           max={item.product.quantity}
           value={item.count}
-          onChange={handleCountChange}
-        ></input>
+          onChange={onCountChange}
+        />
       </td>
       <td>
         <Price value={item.product.price} />

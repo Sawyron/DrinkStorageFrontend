@@ -3,18 +3,19 @@ import CartCacheService from './CartCacheService';
 import ProductService from './ProductService';
 
 const CartService = {
-  getCartItems(): ICartItem[] {
+  async getCartItems(): Promise<ICartItem[]> {
     const cache = CartCacheService.getCartItemsSample();
-    const products = ProductService.getAllByIds(
+    const productResponse = await ProductService.getAllByIds(
       cache.map(item => item.productId)
     );
-    const items = cache
-      .map(item => ({
-        product: products.find(p => p.id === item.productId),
-        count: item.count,
-      }))
-      .filter(item => !!item.product)
-      .map(item => ({ ...item }) as ICartItem);
+    const products = productResponse.data;
+    const items: ICartItem[] = [];
+    cache.forEach(item => {
+      const product = products.find(product => product.id === item.productId);
+      if (product) {
+        items.push({ product: product, count: item.count });
+      }
+    });
     return items;
   },
 };

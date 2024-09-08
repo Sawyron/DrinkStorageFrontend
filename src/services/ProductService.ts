@@ -33,10 +33,13 @@ const ProductService = {
       name: `${sample.name} ${i}`,
     }));
   },
-  getAllByIds(productIds: string[]) {
-    return this.getAllSample().filter(product =>
-      productIds.includes(product.id)
-    );
+  getAllByIds(productIds: string[]): Promise<AxiosResponse<IProduct[]>> {
+    return client.get('Product/by-ids', {
+      params: { ids: productIds },
+      paramsSerializer: {
+        indexes: true,
+      },
+    });
   },
 };
 

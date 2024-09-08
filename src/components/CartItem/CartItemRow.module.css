@@ -1,13 +1,11 @@
 .trash {
   width: 1vw;
 }
+
 .product-image {
-  width: 20vh;
+  height: 10vw;
 }
 
-.product {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  margin: 0.6rem;
+.label {
+  text-align: left;
 }

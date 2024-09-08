@@ -20,9 +20,13 @@ const CartPage: FC = () => {
     [items]
   );
 
-  const fetchItems = useCallback(() => {
-    const items = CartService.getCartItems();
-    setItems(items);
+  const fetchItems = useCallback(async () => {
+    try {
+      const items = await CartService.getCartItems();
+      setItems(items);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   useEffect(() => {
@@ -53,7 +57,7 @@ const CartPage: FC = () => {
       <table className={classes.table}>
         <thead className={classes.head}>
           <tr>
-            <th>Товар</th>
+            <th colSpan={2}>Товар</th>
             <th>Количесво</th>
             <th>Цена</th>
           </tr>

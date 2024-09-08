@@ -1,0 +1,43 @@
+.header {
+  display: grid;
+}
+
+.options {
+  grid-column: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.options * {
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+
+.brands {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0.6rem;
+  margin: 0.2rem;
+}
+
+.price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.6rem;
+  margin: 0.2rem;
+}
+
+.controls {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls * {
+  padding: 0.2rem;
+  margin: 0.2rem;
+}

@@ -1,0 +1,13 @@
+.coin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  background-color: #bbb;
+  border: solid black;
+  border-radius: 50%;
+  font-size: x-large;
+  font-weight: bold;
+  margin: 0.6rem;
+}

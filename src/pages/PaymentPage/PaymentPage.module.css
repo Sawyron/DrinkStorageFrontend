@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-table {
+  text-align: center;
+  border-collapse: collapse;
+  width: 100%;
+  flex: 1 0 100%;
+}
+
+.head {
+  border-bottom: 2px solid gray;
+  text-align: center;
+}
+
+.head > tr > th:first-child {
+  text-align: left;
+}
+
+.table-body {
+  border-bottom: 2px solid gray;
+}
+
+.pay-info {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.pay-info div {
+  display: flex;
+  flex-direction: row;
+  margin: 1.4rem 0.4rem;
+}
+.pay-info div * {
+  margin: 0.2rem;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50%;
+}
+
+.buttons button {
+  width: 25vw;
+}
+
+.money {
+  font-weight: bold;
+  font-size: large;
+}
+
+.money-not-enought {
+  color: red;
+}

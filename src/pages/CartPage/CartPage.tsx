@@ -51,7 +51,16 @@ const CartPage: FC = () => {
     CartCacheService.removeProduct(productId);
     fetchItems();
   };
-
+  if (items.length === 0) {
+    return (
+      <>
+        <p>У вас нет ни одного товара, вернитесь на страницу каталога</p>
+        <button className={`${classes.back} yellow-btn`} onClick={handleBack}>
+          Вернуться
+        </button>
+      </>
+    );
+  }
   return (
     <>
       <table className={classes.table}>

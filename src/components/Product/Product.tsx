@@ -11,6 +11,7 @@ export interface IProductProps {
 
 const Product: FC<IProductProps> = ({ product, onAdd, isSelected }) => {
   const isDisabled = product.quantity <= 0;
+  const label = isDisabled ? 'Закончился' : isSelected ? 'Выбрано' : 'Выбрать';
   return (
     <div className={classes.container}>
       <img
@@ -25,7 +26,7 @@ const Product: FC<IProductProps> = ({ product, onAdd, isSelected }) => {
         onClick={() => onAdd(product)}
         disabled={isDisabled}
       >
-        {isSelected ? 'Выбрано' : 'Выбрать'}
+        {label}
       </button>
     </div>
   );

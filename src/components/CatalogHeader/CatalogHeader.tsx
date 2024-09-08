@@ -1,8 +1,7 @@
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import classes from './CatalogHeader.module.css';
 import Select from '../Select/Select';
 import { IBrand } from '../../types/IBrand';
-import BrandService from '../../services/BrandService';
 import PriceInput from '../PriceInput/PriceInput';
 import Price from '../Price/Price';
 import { useNavigate } from 'react-router-dom';
@@ -10,30 +9,35 @@ import { useNavigate } from 'react-router-dom';
 export interface ICatalogHeaderProps {
   maxPrice: number;
   selectedProductCount: number;
+  onMaxPriceChanged: (price: number) => void;
+  brands: IBrand[];
+  onBrandChanged: (brand: IBrand) => void;
 }
 
 const CatalogHeader: FC<ICatalogHeaderProps> = ({
   maxPrice,
   selectedProductCount,
+  onMaxPriceChanged,
+  brands,
+  onBrandChanged,
 }) => {
   const navigate = useNavigate();
-  const [brands, setBrands] = useState<IBrand[]>([]);
   const [price, setPrice] = useState(maxPrice);
 
-  const fetchBrands = useCallback(() => {
-    const brandData = BrandService.getAllSample();
-    setBrands(brandData);
-  }, []);
-
-  useEffect(() => {
-    fetchBrands();
-  }, [fetchBrands]);
   useEffect(() => {
     setPrice(maxPrice);
   }, [maxPrice]);
 
   const handleSelect = () => {
     navigate('/cart');
+  };
+  const handleMaxPriceChanged = (price: number) => {
+    setPrice(price);
+    onMaxPriceChanged(price);
+  };
+  const handleBrandChanged = (brandId: string) => {
+    const brand = brands.find(brand => brand.id === brandId);
+    onBrandChanged(brand!);
   };
 
   return (
@@ -46,7 +50,7 @@ const CatalogHeader: FC<ICatalogHeaderProps> = ({
               label: brand.name,
               value: brand.id,
             }))}
-            onChange={() => {}}
+            onChange={handleBrandChanged}
           />
         </div>
         <div className={classes.price}>
@@ -54,7 +58,7 @@ const CatalogHeader: FC<ICatalogHeaderProps> = ({
           <PriceInput
             min={0}
             max={maxPrice}
-            onChange={value => setPrice(value)}
+            onChange={value => handleMaxPriceChanged(value)}
             value={price}
           />
         </div>

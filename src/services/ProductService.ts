@@ -7,6 +7,15 @@ const ProductService = {
   getAll(): Promise<AxiosResponse<IProductInfo>> {
     return client.get('Product');
   },
+  getAllByBrandAndPrice(
+    price: number,
+    brandId?: string,
+    signal?: AbortSignal
+  ): Promise<AxiosResponse<IProduct[]>> {
+    return client.get('Product/search', {
+      params: { brandId: brandId, maxPrice: price, signal: signal },
+    });
+  },
   getAllSample(): IProduct[] {
     const sample = {
       id: '1',

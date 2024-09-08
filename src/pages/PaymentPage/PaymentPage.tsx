@@ -16,6 +16,7 @@ const PaymentPage: FC = () => {
   const navigate = useNavigate();
 
   const [coins, setCoins] = useState<CoinCount[]>([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const fetchCoins = useCallback(() => {
     const data = CoinService.getAll();
@@ -26,12 +27,16 @@ const PaymentPage: FC = () => {
     fetchCoins();
   }, [fetchCoins]);
 
-  const totalPrice = useMemo(() => {
-    return CartService.getCartItems().reduce(
-      (total, item) => total + item.count * item.product.price,
-      0
+  const calculateTotalPrice = useCallback(async () => {
+    const items = await CartService.getCartItems();
+    setTotalPrice(
+      items.reduce((total, item) => total + item.count * item.product.price, 0)
     );
   }, []);
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [calculateTotalPrice]);
+
   const deposit = useMemo(
     () =>
       coins.reduce(

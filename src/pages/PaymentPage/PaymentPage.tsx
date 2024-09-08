@@ -18,9 +18,13 @@ const PaymentPage: FC = () => {
   const [coins, setCoins] = useState<CoinCount[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const fetchCoins = useCallback(() => {
-    const data = CoinService.getAll();
-    setCoins(data.map(coin => ({ coin: coin, count: 0 })));
+  const fetchCoins = useCallback(async () => {
+    try {
+      const response = await CoinService.getAll();
+      setCoins(response.data.map(coin => ({ coin: coin, count: 0 })));
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   useEffect(() => {

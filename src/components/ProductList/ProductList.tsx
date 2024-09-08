@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import { IProduct } from '../../types/IProduct';
 import classes from './ProductList.module.css';
 import Product from '../Product/Product';
@@ -10,14 +10,23 @@ export interface IProductListProps {
 }
 
 const ProductList: FC<IProductListProps> = ({ products, onProductAdded }) => {
-  const cartMap = useMemo(
-    () => CartCacheService.checkIfExists(products.map(product => product.id)),
-    [products]
-  );
+  const [cartMap, setCartMap] = useState(new Map<string, boolean>());
+
+  const fetchCartMap = useCallback(() => {
+    const map = CartCacheService.checkIfExists(
+      products.map(product => product.id)
+    );
+    setCartMap(map);
+  }, [products]);
+
+  useEffect(() => {
+    fetchCartMap();
+  }, [fetchCartMap]);
 
   const handleProductAdd = (product: IProduct) => {
     CartCacheService.addItem({ productId: product.id, count: 1 });
     onProductAdded();
+    fetchCartMap();
   };
 
   return (

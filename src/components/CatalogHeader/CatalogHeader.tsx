@@ -69,7 +69,7 @@ const CatalogHeader: FC<ICatalogHeaderProps> = ({
           className={selectedProductCount > 0 ? 'green-btn' : ''}
           onClick={handleSelect}
         >
-          Выбратно: {selectedProductCount}
+          Выбрано: {selectedProductCount}
         </button>
       </div>
     </div>

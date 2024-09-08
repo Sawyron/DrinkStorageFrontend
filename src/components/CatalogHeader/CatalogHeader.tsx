@@ -68,6 +68,7 @@ const CatalogHeader: FC<ICatalogHeaderProps> = ({
         <button
           className={selectedProductCount > 0 ? 'green-btn' : ''}
           onClick={handleSelect}
+          disabled={selectedProductCount === 0}
         >
           Выбрано: {selectedProductCount}
         </button>

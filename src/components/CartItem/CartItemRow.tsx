@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
 import { ICartItem } from '../../types/ICartItem';
 import Price from '../Price/Price';
 import classes from './CartItemRow.module.css';
@@ -25,7 +25,7 @@ const CartItemRow: FC<ICartItemProps> = ({ item, onCountChange, onDelete }) => {
       </td>
       <td>
         <NumberInput
-          min={0}
+          min={1}
           max={item.product.quantity}
           value={item.count}
           onChange={onCountChange}

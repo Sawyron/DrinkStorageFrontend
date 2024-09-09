@@ -39,6 +39,18 @@ const CartCacheService = {
       JSON.stringify(presentItems.filter(item => item.productId !== productId))
     );
   },
+  removeProducts(productIds: string[]) {
+    const present = this.getCartItemsSample();
+    localStorage.setItem(
+      cartKey,
+      JSON.stringify(
+        present.filter(item => !productIds.includes(item.productId))
+      )
+    );
+  },
+  clear() {
+    localStorage.removeItem(cartKey);
+  },
   updateCount(productId: string, count: number) {
     const presentItems = this.getCartItemsSample();
     presentItems.forEach(item => {

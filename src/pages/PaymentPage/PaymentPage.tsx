@@ -86,6 +86,7 @@ const PaymentPage: FC = () => {
       } as ICreateOrderRequest;
       const response = await OrderService.createOder(requst);
       setChange(response.data.change);
+      CartCacheService.clear();
     } catch (error) {
       console.error(error);
     } finally {

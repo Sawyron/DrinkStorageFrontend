@@ -64,7 +64,7 @@ const CatalogHeader: FC<ICatalogHeaderProps> = ({
         </div>
       </div>
       <div className={classes.controls}>
-        <button>Импорт</button>
+        <button onClick={() => navigate('/import')}>Импорт</button>
         <button
           className={selectedProductCount > 0 ? 'green-btn' : ''}
           onClick={handleSelect}

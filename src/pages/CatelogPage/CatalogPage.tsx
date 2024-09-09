@@ -7,6 +7,7 @@ import ProductService from '../../services/ProductService';
 import { IProduct } from '../../types/IProduct';
 import { IBrand } from '../../types/IBrand';
 import BrandService from '../../services/BrandService';
+import CartService from '../../services/CartService';
 
 const CatalogPage: FC = () => {
   const countProducts = () => {
@@ -76,6 +77,9 @@ const CatalogPage: FC = () => {
   useEffect(() => {
     fetchBrands();
   }, [fetchBrands]);
+  useEffect(() => {
+    CartService.getCartItems();
+  }, []);
 
   return (
     <div className={classes.container}>

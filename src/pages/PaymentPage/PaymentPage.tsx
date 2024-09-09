@@ -6,6 +6,11 @@ import classes from './PaymentPage.module.css';
 import Price from '../../components/Price/Price';
 import CartService from '../../services/CartService';
 import { useNavigate } from 'react-router-dom';
+import { ICreateOrderRequest } from '../../types/ICreateOrderRequest';
+import CartCacheService from '../../services/CartCacheService';
+import OrderService from '../../services/OrderService';
+import { IChangeItem } from '../../types/IChangeItem';
+import Change from '../../components/Change/Change';
 
 type CoinCount = {
   coin: ICoin;
@@ -17,6 +22,8 @@ const PaymentPage: FC = () => {
 
   const [coins, setCoins] = useState<CoinCount[]>([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [created, setCreated] = useState(false);
+  const [change, setChange] = useState<IChangeItem[] | null>(null);
 
   const fetchCoins = useCallback(async () => {
     try {
@@ -63,6 +70,42 @@ const PaymentPage: FC = () => {
   const handleBack = () => {
     navigate('/cart');
   };
+  const handlePayment = useCallback(async () => {
+    if (deposit < totalPrice) {
+      return;
+    }
+    try {
+      setChange(null);
+      const items = CartCacheService.getCartItemsSample();
+      const requst = {
+        coins: coins.map(c => ({ id: c.coin.id, quantity: c.count })),
+        orderItems: items.map(i => ({
+          productId: i.productId,
+          quantity: i.count,
+        })),
+      } as ICreateOrderRequest;
+      const response = await OrderService.createOder(requst);
+      setChange(response.data.change);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setCreated(true);
+    }
+  }, [coins, deposit, totalPrice]);
+
+  if (created) {
+    if (change) {
+      return <Change items={change} />;
+    }
+    return (
+      <>
+        <h2>Не удалось выдать сдачу</h2>
+        <button className="yellow-btn" onClick={() => navigate('/')}>
+          Каталог товаров
+        </button>
+      </>
+    );
+  }
 
   return (
     <div className={classes.container}>
@@ -104,7 +147,9 @@ const PaymentPage: FC = () => {
         <button className="yellow-btn" onClick={handleBack}>
           Вернуться
         </button>
-        <button className="green-btn">Оплатить</button>
+        <button className="green-btn" onClick={handlePayment}>
+          Оплатить
+        </button>
       </div>
     </div>
   );

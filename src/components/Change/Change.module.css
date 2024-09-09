@@ -1,0 +1,15 @@
+.change-items-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+
+.change-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.change-item * {
+  margin: 0.6rem;
+}

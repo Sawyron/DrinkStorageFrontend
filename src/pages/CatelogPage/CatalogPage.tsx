@@ -30,7 +30,6 @@ const CatalogPage: FC = () => {
   const fetchProducts = useCallback(async () => {
     try {
       const response = await ProductService.getAll();
-      console.log('products', JSON.stringify(response.data));
       setMaxPrice(response.data.maxPrice);
       setSearchPrice(maxPrice);
       setProducts(response.data.products);
@@ -48,8 +47,6 @@ const CatalogPage: FC = () => {
           brandId,
           sigal
         );
-        console.log(searchPrice, brandId);
-        console.log('search', JSON.stringify(response.data));
         setProducts(response.data);
       } catch (error) {
         console.error(error);
@@ -60,7 +57,6 @@ const CatalogPage: FC = () => {
   const fetchBrands = useCallback(async () => {
     try {
       const response = await BrandService.getAll();
-      console.log('brands', JSON.stringify(response.data));
       setBrands([allBrandsOption, ...response.data]);
     } catch (error) {
       console.error(error);
